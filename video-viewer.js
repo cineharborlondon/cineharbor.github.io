@@ -8,15 +8,15 @@
   document.body.append(dialog);
   const stage = dialog.querySelector('.video-viewer-stage');
   const title = dialog.querySelector('.video-viewer-title');
-  let activeFrame, ratio = 16 / 9, trigger;
+  let activeFrame, activeViewport, ratio = 16 / 9, trigger;
   const fit = () => {
     if (!activeFrame || !dialog.open) return;
     const style = getComputedStyle(stage);
     const width = stage.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
     const height = stage.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
     const playerWidth = Math.max(1, Math.min(width, height * ratio));
-    activeFrame.style.width = `${playerWidth}px`;
-    activeFrame.style.height = `${playerWidth / ratio}px`;
+    activeViewport.style.width = `${playerWidth}px`;
+    activeViewport.style.height = `${playerWidth / ratio}px`;
   };
   new ResizeObserver(fit).observe(stage);
   window.visualViewport?.addEventListener('resize', fit);
@@ -26,7 +26,7 @@
     if (event.target === dialog || event.target === stage || event.target.classList.contains('video-viewer-toolbar')) close();
   });
   dialog.addEventListener('close', () => {
-    activeFrame?.remove(); activeFrame = null;
+    activeViewport?.remove(); activeFrame = null; activeViewport = null;
     document.documentElement.style.overflow = '';
     trigger?.focus({ preventScroll: true });
   });
@@ -53,8 +53,13 @@
       activeFrame.allow = source.allow; activeFrame.allowFullscreen = true;
       activeFrame.referrerPolicy = source.referrerPolicy;
       activeFrame.src = url.href;
-      stage.replaceChildren(activeFrame);
+      activeViewport = document.createElement('div');
+      activeViewport.className = 'video-viewer-frame-shell';
+      activeViewport.style.setProperty('--video-overscan', player.style.getPropertyValue('--video-overscan') || '1');
+      activeViewport.append(activeFrame);
+      stage.replaceChildren(activeViewport);
       dialog.showModal(); document.documentElement.style.overflow = 'hidden'; fit();
     });
   });
 })();
+

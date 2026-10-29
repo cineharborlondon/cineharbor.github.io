@@ -18,12 +18,12 @@ function photo(image, index, hero = false) {
   </button>`;
 }
 
-function relatedVideo(video, showTitle = false, headingLevel = 2) {
+function relatedVideo(video, showTitle = false, headingLevel = 2, overscan = 1) {
   if (!/^\d+$/.test(video.vimeo || '')) throw new Error('A related video needs a Vimeo ID');
   const hash = video.vimeoHash ? 'h=' + encodeURIComponent(video.vimeoHash) + '&' : '';
   const embed = `https://player.vimeo.com/video/${video.vimeo}?${hash}playsinline=1&title=0&byline=0&portrait=0&dnt=1`;
   const portrait = showTitle && Number(video.aspectRatio) < 1;
-  return `<article class="related-video${portrait ? ' related-video-portrait' : ''}"><div class="related-video-player" style="--video-ratio:${Number(video.aspectRatio) || 16 / 9}"><iframe src="${esc(embed)}" title="${esc(video.title)} — Vimeo video player" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>${showTitle ? `<h${headingLevel} class="related-video-title">${esc(video.title)}</h${headingLevel}>` : ''}</article>`;
+  return `<article class="related-video${portrait ? ' related-video-portrait' : ''}"><div class="related-video-player" style="--video-ratio:${Number(video.aspectRatio) || 16 / 9};--video-overscan:${overscan}"><iframe src="${esc(embed)}" title="${esc(video.title)} — Vimeo video player" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>${showTitle ? `<h${headingLevel} class="related-video-title">${esc(video.title)}</h${headingLevel}>` : ''}</article>`;
 }
 
 for (const project of projects) {
@@ -40,7 +40,7 @@ for (const project of projects) {
   const provider = 'Vimeo';
   const hash = project.vimeoHash ? encodeURIComponent(project.vimeoHash) : '';
   const embed = `https://player.vimeo.com/video/${project.vimeo}?${hash ? 'h=' + hash + '&' : ''}playsinline=1&title=0&byline=0&portrait=0&dnt=1`;
-  const hero = project.groupedVideoLayout ? '' : isPhoto ? '' : `<div class="detail-player${ratio < 1 ? ' detail-player-portrait' : ''}" style="--video-ratio:${ratio}"><iframe src="${esc(embed)}" title="${esc(project.title)} — ${provider} video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+  const hero = project.groupedVideoLayout ? '' : isPhoto ? '' : `<div class="detail-player${ratio < 1 ? ' detail-player-portrait' : ''}" style="--video-ratio:${ratio};--video-overscan:${Number(project.playerOverscan) || 1}"><iframe src="${esc(embed)}" title="${esc(project.title)} — ${provider} video player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
   const description = project.description ? `<div class="project-description">${project.description.split('\n\n').map(p => `<p>${esc(p)}</p>`).join('')}</div>` : '';
   const credits = Array.isArray(project.credits) && project.credits.length ? `<dl class="project-credits">${project.credits.map(c => `<div><dt>${esc(c.role)}</dt><dd>${esc(c.name)}</dd></div>`).join('')}</dl>` : project.credit ? `<p class="project-credits">${esc(project.credit)}</p>` : '';
   const galleryImages = images;
@@ -53,13 +53,13 @@ for (const project of projects) {
   const relatedVideos = (project.relatedVideoGroups || []).flatMap(group => group.videos || []);
   if (project.groupedVideoLayout && !relatedVideos.some(video => video.vimeo === project.vimeo)) throw new Error('A grouped project must include its primary video in a group');
   const related = project.groupedVideoLayout
-    ? `<section class="related-videos video-series" aria-label="Film series">${(project.relatedVideoGroups || []).filter(group => group.videos?.length).map((group, index) => `<section class="video-series-group" aria-labelledby="video-group-${index}"><h2 class="video-series-heading" id="video-group-${index}">${esc(group.title)}</h2><div class="related-video-grid-grouped${group.videos.length === 4 && group.videos.every(video => Number(video.aspectRatio) < 1) ? ' portrait-pair-grid' : ''}">${group.videos.map(video => relatedVideo(video, true, 3)).join('\n')}</div></section>`).join('\n')}</section>`
-    : relatedVideos.length ? `<section class="related-videos" aria-label="${project.showVideoTitles ? 'More films in this series' : 'Related videos'}"><div class="related-video-grid${project.showVideoTitles ? ' related-video-grid-labelled' : ''}">${relatedVideos.map(video => relatedVideo(video, project.showVideoTitles === true)).join('\n')}</div></section>` : '';
+    ? `<section class="related-videos video-series" aria-label="Film series">${(project.relatedVideoGroups || []).filter(group => group.videos?.length).map((group, index) => `<section class="video-series-group" aria-labelledby="video-group-${index}"><h2 class="video-series-heading" id="video-group-${index}">${esc(group.title)}</h2><div class="related-video-grid-grouped${group.videos.length === 4 && group.videos.every(video => Number(video.aspectRatio) < 1) ? ' portrait-pair-grid' : ''}">${group.videos.map(video => relatedVideo(video, true, 3, Number(project.playerOverscan) || 1)).join('\n')}</div></section>`).join('\n')}</section>`
+    : relatedVideos.length ? `<section class="related-videos" aria-label="${project.showVideoTitles ? 'More films in this series' : 'Related videos'}"><div class="related-video-grid${project.showVideoTitles ? ' related-video-grid-labelled' : ''}">${relatedVideos.map(video => relatedVideo(video, project.showVideoTitles === true, 2, Number(project.playerOverscan) || 1)).join('\n')}</div></section>` : '';
   const seriesStyles = project.showVideoTitles || project.groupedVideoLayout || (!isPhoto && ratio < 1) ? `<link rel="stylesheet" href="/project-series.css?v=large-portrait-20261008b">` : '';
-  const videoCaption = project.videoTitle ? `<p class="detail-video-caption">${esc(project.videoTitle)}</p>` : '';
+  const videoCaption = project.videoTitle ? `<${project.videoTitleProminent ? 'h2' : 'p'} class="detail-video-caption${project.videoTitleProminent ? ' detail-video-caption-prominent' : ''}">${esc(project.videoTitle)}</${project.videoTitleProminent ? 'h2' : 'p'}>` : '';
   const lightbox = images.length ? `<dialog class="photo-dialog" aria-label="Photograph viewer"><div class="photo-viewer"><div class="photo-toolbar"><p id="photo-counter" aria-live="polite"></p><button type="button" class="close-button" id="close-photo" autofocus>Close <span aria-hidden="true">×</span></button></div><img id="full-photo" alt=""><div class="photo-navigation"><button type="button" id="previous-photo" class="close-button">Previous</button><button type="button" id="next-photo" class="close-button">Next</button></div></div></dialog><script id="gallery-data" type="application/json">${JSON.stringify(images).replace(/</g, '\\u003c')}</script><script src="/project.js?v=${version}" defer></script>` : '';
   const html = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ebe4d6"><meta name="referrer" content="strict-origin-when-cross-origin"><title>${esc(project.title)} · Cine Harbor</title><meta name="description" content="${esc(project.description || `${project.title} — ${label} by Cine Harbor, London.`)}"><link rel="icon" href="/assets/favicon.svg?v=845" type="image/svg+xml"><link rel="stylesheet" href="/style.css?v=${isPhoto ? 'photo-galleries-20261007' : 'embedded-only-20261005'}">${seriesStyles}${!isPhoto ? '<link rel="stylesheet" href="/video-viewer.css?v=fit-screen-20261009b"><script src="/video-viewer.js?v=blank-close-20261009" defer></script>' : ''}<link rel="stylesheet" href="/work-header.css?v=unified-brand-20261007"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ebe4d6"><meta name="referrer" content="strict-origin-when-cross-origin"><title>${esc(project.title)} · Cine Harbor</title><meta name="description" content="${esc(project.description || `${project.title} — ${label} by Cine Harbor, London.`)}"><link rel="icon" href="/assets/favicon.svg?v=845" type="image/svg+xml"><link rel="stylesheet" href="/style.css?v=${isPhoto ? 'photo-galleries-20261007' : 'embedded-only-20261005'}">${seriesStyles}${!isPhoto ? '<link rel="stylesheet" href="/video-viewer.css?v=series-edges-20261029"><script src="/video-viewer.js?v=series-edges-20261029" defer></script>' : ''}<link rel="stylesheet" href="/work-header.css?v=unified-brand-20261007"></head>
 <body id="top"${isPhoto ? ' class="photography-detail"' : ''}><a class="skip-link" href="#project">Skip to project</a><div class="page-shell detail-page">
 <header class="site-header work-header"><a class="wordmark work-wordmark" href="/index.html" aria-label="Cine Harbor, home"><span aria-hidden="true">CINE</span><span aria-hidden="true">HARBOR</span></a><nav class="work-header-right" aria-label="Main navigation"><a href="${back}" aria-current="page">Work</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
 <main id="project"><div class="detail-breadcrumb"><a href="${back}">${label}</a><span>${esc(project.title)}</span></div>${hero}${videoCaption}
@@ -69,6 +69,7 @@ ${gallery}${related}<nav class="project-pagination" aria-label="Project navigati
   writeFileSync(path.join(root, project.url.slice(1)), html);
 }
 console.log(`Generated ${projects.length} project pages and homepage data.`);
+
 
 
 

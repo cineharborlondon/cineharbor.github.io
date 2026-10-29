@@ -37,3 +37,10 @@
   .detail-page .related-video-player[style] { width: min(100%, calc(70svh * var(--video-ratio, 1.7778))); }
   .detail-page .detail-player-portrait { width: min(100%, calc(72svh * var(--video-ratio))); }
 }
+
+
+/* Trim only explicitly flagged edge padding, keeping native video proportions. */
+.detail-player > iframe, .related-video-player > iframe { transform: scale(var(--video-overscan, 1)); transform-origin: center; }
+.video-viewer-frame-shell { overflow: hidden; min-width: 0; min-height: 0; max-width: 100%; max-height: 100%; }
+.video-viewer-frame-shell > .video-viewer-frame { width: 100%; height: 100%; transform: scale(var(--video-overscan, 1)); transform-origin: center; }
+.detail-video-caption.detail-video-caption-prominent { margin: 20px 0 0; font-family: "Josefin Sans", sans-serif; font-size: clamp(24px, 2.2vw, 32px); font-weight: 500; line-height: 1.25; color: var(--ink); }

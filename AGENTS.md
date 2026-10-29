@@ -82,3 +82,6 @@ Latest user label update: The Content subsection heading under Commercials is Ev
 
 
 Latest screen-size correction overrides no-popup instruction: Keep portrait detail players at a moderate screen-limited inline size. Every primary and related video has an Enlarge video button opening a centered screen-fitting viewer, including mobile and iPad. Related unlabelled video grids use two desktop columns and one mobile column. Preserve all media and routes.
+
+
+HUAWEI MWC series: description credits in-house KOLs for hands-on exhibition deep dives, 5 themes / 8 total films (3 landscape, 5 portrait). Only 5 links are currently supplied; preserve them and request the remaining 3 portrait links rather than inventing videos. Healthcare is a prominent subject heading. HUAWEI uses 1.008 player overscan for thin player-edge artifacts; NEODIKO uses 1.02 to trim thin encoded edge padding. Keep native proportions and apply the same trim in enlarged viewing.

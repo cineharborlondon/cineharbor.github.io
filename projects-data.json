@@ -81,7 +81,7 @@
     "credit": "",
     "sample": false,
     "slug": "huawei-mwc-2026",
-    "description": "A five-part video series for HUAWEI at MWC 2026, filmed in Barcelona.\n\nHealthcare, AI across industries, education, retail and ISP solutions.",
+    "description": "HUAWEI’s in-house KOLs take viewers on an in-depth tour of MWC 2026, introducing technologies through hands-on demonstrations and real-world applications.\n\n5 themes · 8 films: 3 landscape and 5 portrait. Exploring healthcare, AI across industries, education, retail and ISP solutions.",
     "images": [],
     "url": "/social-huawei-mwc-2026.html",
     "location": "Barcelona, Spain",
@@ -118,7 +118,9 @@
           }
         ]
       }
-    ]
+    ],
+    "videoTitleProminent": true,
+    "playerOverscan": 1.008
   },
   {
     "collection": "branded-content",
@@ -2562,6 +2564,7 @@
     "displayCategory": "Exhibition Film",
     "description": "An event film for NEODIKO at an exhibition of Chinese intangible cultural heritage and contemporary design in London.\n\nTraditional craftsmanship meets contemporary living, bringing Eastern aesthetics into a global design conversation.",
     "images": [],
-    "credit": ""
+    "credit": "",
+    "playerOverscan": 1.02
   }
 ]
