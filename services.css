@@ -47,3 +47,24 @@
 .services-shell { min-height: 0; }
 .services-shell > .services-main { flex: 0 0 auto; }
 .services-shell > .site-footer { margin-top: 0; }
+
+/* Balance the two service areas across the screen instead of packing them at the top. */
+.services-shell { min-height: 100svh; }
+.services-shell > .services-main { flex: 1; }
+@media (min-width: 1000px) and (min-height: 750px) {
+ .services-shell > .services-main { display: grid; grid-template-rows: minmax(auto, 1.15fr) minmax(auto, 1fr) auto; }
+ .services-intro,.services-core,.services-network { width: min(100%, 1400px); }
+ .services-hero { display: flex; flex-direction: column; justify-content: center; padding-block: clamp(36px, 5vh, 90px); }
+ .services-intro { margin-bottom: 26px; }
+ .services-primary h2 { font-size: clamp(44px, 3.2vw, 76px); }
+ .services-promise { font-size: clamp(22px, 1.4vw, 28px); }
+ .services-core-description { font-size: clamp(18px, 1.05vw, 23px); }
+ .services-process h3 { font-size: clamp(23px, 1.4vw, 29px); }
+ .services-process p,.services-rental p { font-size: clamp(18px, 1vw, 22px); }
+ .services-network { display: flex; flex-direction: column; justify-content: center; padding-block: clamp(32px, 4vh, 68px); }
+ .services-network-heading p { font-size: clamp(23px, 1.4vw, 30px); }
+ .services-list { row-gap: clamp(28px, 3.5vh, 60px); margin-top: 32px; }
+ .service h3 { font-size: clamp(21px, 1.2vw, 26px); }
+ .service p { font-size: clamp(17px, .95vw, 21px); }
+ .services-contact { margin: 0 auto 24px; }
+}
