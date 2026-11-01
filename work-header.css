@@ -38,3 +38,11 @@
 
 /* The About video backdrop keeps its original light wordmark. */
 .about-video-page .work-wordmark { color: var(--ink); }
+
+
+/* Keep four navigation links alongside the wordmark on small screens. */
+@media (max-width: 480px) {
+  .page-shell > .work-header { gap: 8px; }
+  .work-header nav { gap: 12px; font-size: 12px; }
+  .work-wordmark { font-size: 20px; }
+}

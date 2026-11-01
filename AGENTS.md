@@ -85,3 +85,6 @@ Latest screen-size correction overrides no-popup instruction: Keep portrait deta
 
 
 HUAWEI MWC series: description credits in-house KOLs for hands-on exhibition deep dives, 5 themes / 8 total films (3 landscape, 5 portrait). Only 5 links are currently supplied; preserve them and request the remaining 3 portrait links rather than inventing videos. Healthcare is a prominent subject heading. HUAWEI uses 1.008 player overscan for thin player-edge artifacts; NEODIKO uses 1.02 to trim thin encoded edge padding. Keep native proportions and apply the same trim in enlarged viewing.
+
+
+Services page: /services.html uses the approved six client-facing service categories and concise descriptions. Shared navigation is Work / Services / About / Contact; preserve the About light wordmark. Services Contact CTA goes to /contact.html.
