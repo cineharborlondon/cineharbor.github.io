@@ -87,3 +87,7 @@
  .service p { font-size: clamp(16px, .85vw, 18px); }
  .services-contact { margin-bottom: 20px; }
 }
+
+.services-process .services-rental { margin-top: 32px; }
+.services-process .services-rental h3 { font-size: clamp(21px, 1.2vw, 25px); line-height: 1.25; margin-bottom: 12px; }
+@media(max-width: 800px) { .services-process .services-rental { margin-top: 0; } .services-process .services-rental h3 { font-size: 20px; } }
