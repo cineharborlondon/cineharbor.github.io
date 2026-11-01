@@ -90,3 +90,5 @@ HUAWEI MWC series: description credits in-house KOLs for hands-on exhibition dee
 Services page: /services.html uses the approved six client-facing service categories and concise descriptions. Shared navigation is Work / Services / About / Contact; preserve the About light wordmark. Services Contact CTA goes to /contact.html.
 
 Rental service scope: Equipment Rental is available in London, UK only. The Services rental section must not advertise European rental, local crews, locations or general production support.
+
+Services hierarchy: Film, Content & Photography comes first as Cine Harbor's core specialism, followed by London-only Equipment Rental. Creative & Brand Strategy, Social Media & Influencer Marketing, Events & Experiences, and Exhibition & Spatial Design appear separately under Through Our Network, clearly delivered with trusted specialist partners.
