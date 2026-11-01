@@ -37,3 +37,8 @@
  .services-promise,.services-network-heading p { font-size: 21px; }
  .services-process p,.service p { font-size: 17px; }
 }
+
+@media (min-width: 1100px) {
+ .services-core { grid-template-columns: 1.7fr 1fr; gap: 64px; }
+ .services-core-description { max-width: none; font-size: 18px; line-height: 1.5; text-wrap: pretty; }
+}
