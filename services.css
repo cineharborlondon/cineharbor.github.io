@@ -42,3 +42,8 @@
  .services-core { grid-template-columns: 1.7fr 1fr; gap: 64px; }
  .services-core-description { max-width: none; font-size: 18px; line-height: 1.5; text-wrap: pretty; }
 }
+
+/* Let the footer follow the content instead of stretching the main area. */
+.services-shell { min-height: 0; }
+.services-shell > .services-main { flex: 0 0 auto; }
+.services-shell > .site-footer { margin-top: 0; }
