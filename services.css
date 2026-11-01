@@ -68,3 +68,22 @@
  .service p { font-size: clamp(17px, .95vw, 21px); }
  .services-contact { margin: 0 auto 24px; }
 }
+
+/* A modest reduction while preserving the approved layout and alignment. */
+@media (min-width: 1000px) {
+ .services-hero { padding-block: clamp(28px, 3.5vh, 58px); }
+ .services-intro { margin-bottom: 20px; }
+ .services-primary h2 { font-size: clamp(40px, 2.8vw, 64px); margin-bottom: 18px; }
+ .services-promise { font-size: clamp(20px, 1.2vw, 24px); margin-bottom: 12px; }
+ .services-core-description { font-size: clamp(17px, .95vw, 20px); }
+ .services-process h3 { font-size: clamp(21px, 1.2vw, 25px); }
+ .services-process p,.services-rental p { font-size: clamp(17px, .9vw, 19px); }
+ .services-process section + section { margin-top: 32px; }
+ .services-rental { margin-top: 20px; }
+ .services-network { padding-block: clamp(26px, 3vh, 48px); }
+ .services-network-heading p { font-size: clamp(21px, 1.2vw, 25px); }
+ .services-list { row-gap: clamp(24px, 2.5vh, 40px); margin-top: 24px; }
+ .service h3 { font-size: clamp(20px, 1.05vw, 23px); }
+ .service p { font-size: clamp(16px, .85vw, 18px); }
+ .services-contact { margin-bottom: 20px; }
+}
